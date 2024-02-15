@@ -1,3 +1,5 @@
+from random import shuffle
+
 cards=[" A"," 2"," 3"," 4"," 5"," 6"," 7"," 8"," 9","10"," J"," Q"," K"]
 suits=["\u2660","\u2665","\u2663","\u2666"]
 
@@ -33,7 +35,46 @@ def handVal(hand):
             if x==11:
                 val-=10
     return val
-test=[3,43,51]
-print(printCards(test))
-print(handVal(test))
 
+def hit(shoe,hand):hand.append(shoe.pop())
+
+deck = [x for x in range(52)]
+shuffle(deck)
+
+dealer=[]
+hit(deck,dealer)
+hit(deck,dealer)
+
+player=[]
+hit(deck,player)
+hit(deck,player)
+
+while 1:
+    print(printCards(player))
+    print(handVal(player))
+    put=input("hit/stay")
+    if put=="hit":
+        hit(deck,player)
+    else:
+        break
+    if handVal(player)>21:
+        print(printCards(player))
+        print(handVal(player))
+        print("YOU BUSTED")
+        break
+
+while 1:
+    print(printCards(dealer))
+    print(handVal(dealer))
+    if handVal(dealer)>=17: 
+        if handVal(dealer)>21:print("BUST")
+        else: print("Stand")
+        break
+    dealer.append(deck.pop())
+
+if (handVal(dealer)>21 and handVal(player)<=21) or handVal(dealer)<handVal(player):
+    print("win")
+elif (handVal(player)>21 and handVal(dealer)<=21) or handVal(player)<handVal(dealer):
+    print("loss")
+elif (handVal(dealer)>21 and handVal(player)>21) or handVal(dealer)==handVal(player):
+    print("tie")
