@@ -20,5 +20,20 @@ def printCards(hands):
         ret+=card(x)
     return ret
 
-
+def handVal(hand):
+    newHand=[]
+    for x in hand:
+        chk=x//4+1
+        if chk>10: chk=10
+        if chk==1: chk=11
+        newHand.append(chk)
+    val=sum(newHand)
+    for x in newHand:
+        if val>21:
+            if x==11:
+                val-=10
+    return val
+test=[3,43,51]
+print(printCards(test))
+print(handVal(test))
 
